@@ -2,7 +2,7 @@ import Database from "better-sqlite3";
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import { stubPlayers } from "./seed";
+import { seedPlayers } from "./seed";
 
 const db = new Database(":memory:");
 
@@ -17,7 +17,7 @@ const insertPlayer = db.prepare(
   "INSERT INTO players (id, name, country, position, goals, caps) VALUES (?, ?, ?, ?, ?, ?)"
 );
 
-for (const player of stubPlayers) {
+for (const player of seedPlayers) {
   insertPlayer.run(
     player.id,
     player.name,

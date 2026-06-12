@@ -1,1 +1,0 @@
-{"root":["./src/app.test.tsx","./src/app.tsx","./src/main.tsx","./src/api/client.ts","./src/components/formationboard.tsx","./src/components/formationslot.tsx","./src/components/scoresummary.tsx","./src/components/squadscreen.test.tsx","./src/components/squadscreen.tsx","./src/state/draft.ts"],"version":"5.9.3"}
