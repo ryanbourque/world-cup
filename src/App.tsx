@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { DraftState, Player } from "../shared/types";
 import { DraftScreen } from "./components/DraftScreen";
+import { SquadScreen } from "./components/SquadScreen";
 
 function App(): React.JSX.Element {
   const [screen, setScreen] = useState<"draft" | "squad">("draft");
@@ -22,10 +23,10 @@ function App(): React.JSX.Element {
   };
 
   return (
-    <div>
+    <div className="app">
       <h1>Dream Squad Builder</h1>
       {screen === "draft" && <DraftScreen roster={draftState.roster} onPick={handlePick} />}
-      {screen === "squad" && <div>Squad screen coming soon</div>}
+      {screen === "squad" && <SquadScreen initialDraftState={draftState} />}
     </div>
   );
 }
