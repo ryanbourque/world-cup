@@ -2,6 +2,7 @@ import type { Router, Request, Response } from "express";
 import type { DrawRequest, ValidateRequest, ScoreRequest } from "../../shared/types";
 import { getDraw } from "../logic/draw";
 import { scoreStarters } from "../logic/score";
+import { validateSquad } from "../logic/validate";
 
 export function setupRoutes(router: Router): void {
   router.get("/health", (req: Request, res: Response) => {
@@ -15,8 +16,8 @@ export function setupRoutes(router: Router): void {
   });
 
   router.post("/squad/validate", (req: Request, res: Response) => {
-    const _body = req.body as ValidateRequest;
-    res.json({ valid: true, errors: [] });
+    const body = req.body as ValidateRequest;
+    res.json(validateSquad(body));
   });
 
   router.post("/squad/score", (req: Request, res: Response) => {

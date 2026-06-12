@@ -4,7 +4,7 @@ import { FormationBoard } from "./FormationBoard";
 import { ScoreSummary } from "./ScoreSummary";
 import { assignToSlot, unassignSlot, isFormationComplete } from "../state/draft";
 import { getStarterIds } from "../state/draft";
-import { score } from "../api/client";
+import { score, validate } from "../api/client";
 
 interface SquadScreenProps {
   initialDraftState: DraftState;
@@ -16,6 +16,7 @@ export function SquadScreen(props: SquadScreenProps): React.JSX.Element {
   const [selectedPlayerId, setSelectedPlayerId] = useState<number | null>(null);
   const [scoreResult, setScoreResult] = useState<ScoreResponse | null>(null);
   const [isScoring, setIsScoring] = useState(false);
+  const [validationErrors, setValidationErrors] = useState<string[]>([]);
 
   const handleSlotClick = (slot: FormationSlot, playerId: number | null): void => {
     if (playerId === null) {
@@ -24,6 +25,8 @@ export function SquadScreen(props: SquadScreenProps): React.JSX.Element {
       setDraftState(assignToSlot(draftState, slot, playerId));
       setSelectedPlayerId(null);
     }
+    setValidationErrors([]);
+    setScoreResult(null);
   };
 
   const handleBenchPlayerClick = (playerId: number): void => {
@@ -36,8 +39,17 @@ export function SquadScreen(props: SquadScreenProps): React.JSX.Element {
 
   const handleScore = async (): Promise<void> => {
     setIsScoring(true);
+    setValidationErrors([]);
     try {
+      const rosterIds = draftState.roster.map((p) => p.id);
       const starterIds = getStarterIds(draftState);
+
+      const validation = await validate({ rosterIds, starterIds });
+      if (!validation.valid) {
+        setValidationErrors(validation.errors);
+        return;
+      }
+
       const result = await score({ starterIds });
       setScoreResult(result);
     } finally {
@@ -66,6 +78,14 @@ export function SquadScreen(props: SquadScreenProps): React.JSX.Element {
         >
           {isScoring ? "Scoring..." : "Score"}
         </button>
+
+        {validationErrors.length > 0 && (
+          <ul className="validation-errors">
+            {validationErrors.map((err) => (
+              <li key={err}>{err}</li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {scoreResult && <ScoreSummary roster={draftState.roster} result={scoreResult} />}

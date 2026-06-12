@@ -1,8 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import * as client from "../api/client";
 import { SquadScreen } from "./SquadScreen";
 import type { DraftState, Player } from "../../shared/types";
+
+vi.mock("../api/client");
+
+beforeEach(() => {
+  vi.mocked(client.validate).mockResolvedValue({ valid: true, errors: [] });
+  vi.mocked(client.score).mockResolvedValue({ total: 500, breakdown: [] });
+});
 
 const TEST_PLAYERS: Player[] = [
   {
