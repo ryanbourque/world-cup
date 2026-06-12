@@ -1,15 +1,48 @@
 :root {
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  --text: rgba(255, 255, 255, 0.92);
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-muted: rgba(255, 255, 255, 0.55);
+  --bg: #242424;
+  --bg-card: #1e1e1e;
+  --bg-chip: #2a2a2a;
+  --border: rgba(255, 255, 255, 0.18);
+  --border-subtle: rgba(255, 255, 255, 0.09);
+  --accent: #7c7fff;
+  --accent-bg: rgba(124, 127, 255, 0.14);
+  --accent-border: rgba(124, 127, 255, 0.45);
+  --success: #4caf50;
+  --success-bg: rgba(76, 175, 80, 0.18);
+
+  color: var(--text);
+  background-color: var(--bg);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --text: #1a2332;
+    --text-secondary: #374151;
+    --text-muted: #6b7280;
+    --bg: #f8f9fa;
+    --bg-card: #ffffff;
+    --bg-chip: #e9ecef;
+    --border: rgba(0, 0, 0, 0.14);
+    --border-subtle: rgba(0, 0, 0, 0.07);
+    --accent: #4f46e5;
+    --accent-bg: rgba(79, 70, 229, 0.08);
+    --accent-border: rgba(79, 70, 229, 0.35);
+    --success: #16a34a;
+    --success-bg: rgba(22, 163, 74, 0.1);
+  }
 }
 
 a {
   font-weight: 500;
-  color: #646cff;
+  color: var(--accent);
   text-decoration: inherit;
 }
 a:hover {
-  color: #535bf2;
+  color: var(--accent);
+  opacity: 0.8;
 }
 
 button {
@@ -19,29 +52,17 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
+  background-color: var(--bg-card);
+  color: var(--text);
   cursor: pointer;
   transition: border-color 0.25s;
 }
 button:hover {
-  border-color: #646cff;
+  border-color: var(--accent);
 }
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
 }
 
 * {
@@ -64,10 +85,6 @@ body {
 
 .app {
   padding: 2rem;
-}
-
-.card {
-  padding: 2em;
 }
 
 .squad-screen {
@@ -95,7 +112,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.1em;
   margin: 0;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
 }
 
 .slot-container {
@@ -109,9 +126,10 @@ body {
   width: 120px;
   height: 140px;
   padding: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.2);
+  border: 2px solid var(--border);
   border-radius: 8px;
-  background-color: #1a1a1a;
+  background-color: var(--bg-card);
+  color: var(--text);
   cursor: pointer;
   display: flex;
   flex-direction: column;
@@ -123,23 +141,23 @@ body {
 }
 
 .slot:hover:not(:disabled) {
-  border-color: #646cff;
-  box-shadow: 0 0 12px rgba(100, 108, 255, 0.3);
+  border-color: var(--accent);
+  box-shadow: 0 0 12px var(--accent-bg);
 }
 
 .slot:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .slot--filled {
-  border-color: #646cff;
-  background-color: rgba(100, 108, 255, 0.1);
+  border-color: var(--accent-border);
+  background-color: var(--accent-bg);
 }
 
 .slot--selectable {
-  border-color: #4caf50;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
+  border-color: var(--success);
+  box-shadow: 0 0 8px var(--success-bg);
 }
 
 .slot-content {
@@ -151,17 +169,18 @@ body {
 .slot-name {
   font-weight: 600;
   font-size: 0.85rem;
+  color: var(--text);
 }
 
 .slot-position {
   font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-secondary);
 }
 
 .slot-label {
   font-weight: 600;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
 }
 
 .bench {
@@ -170,7 +189,7 @@ body {
   gap: 1rem;
   align-items: center;
   padding: 2rem 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  border-top: 1px solid var(--border);
 }
 
 .bench h3 {
@@ -178,7 +197,7 @@ body {
   font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-muted);
 }
 
 .bench-players {
@@ -190,27 +209,30 @@ body {
 
 .bench-player {
   padding: 0.5rem 1rem;
-  background-color: #2a2a2a;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background-color: var(--bg-chip);
+  border: 1px solid var(--border);
   border-radius: 4px;
+  color: var(--text);
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.2s ease;
 }
 
 .bench-player:hover {
-  border-color: #646cff;
-  background-color: rgba(100, 108, 255, 0.1);
+  border-color: var(--accent);
+  background-color: var(--accent-bg);
 }
 
 .bench-player--selected {
-  border-color: #4caf50;
-  background-color: rgba(76, 175, 80, 0.2);
+  border-color: var(--success);
+  background-color: var(--success-bg);
+  color: var(--text);
 }
 
 .score-controls {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   gap: 1rem;
 }
 
@@ -221,8 +243,28 @@ body {
 }
 
 .score-button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
+}
+
+.validation-errors {
+  list-style: none;
+  margin: 0;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  border-radius: 6px;
+  color: #ef4444;
+  font-size: 0.875rem;
+  text-align: left;
+}
+
+@media (prefers-color-scheme: light) {
+  .validation-errors {
+    color: #b91c1c;
+    background-color: rgba(185, 28, 28, 0.07);
+    border-color: rgba(185, 28, 28, 0.25);
+  }
 }
 
 .score-summary {
@@ -231,15 +273,15 @@ body {
   gap: 1.5rem;
   align-items: center;
   padding: 2rem;
-  background-color: rgba(100, 108, 255, 0.05);
-  border: 1px solid rgba(100, 108, 255, 0.2);
+  background-color: var(--accent-bg);
+  border: 1px solid var(--accent-border);
   border-radius: 8px;
 }
 
 .score-summary h2 {
   margin: 0;
   font-size: 2rem;
-  color: #4caf50;
+  color: var(--success);
 }
 
 .score-table {
@@ -250,23 +292,24 @@ body {
 }
 
 .score-table thead {
-  border-bottom: 2px solid rgba(100, 108, 255, 0.3);
+  border-bottom: 2px solid var(--accent-border);
 }
 
 .score-table th {
   padding: 0.75rem;
   text-align: left;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.8);
+  color: var(--text-secondary);
   text-transform: uppercase;
   font-size: 0.8rem;
 }
 
 .score-table td {
   padding: 0.75rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text);
 }
 
 .score-table tbody tr:hover {
-  background-color: rgba(100, 108, 255, 0.05);
+  background-color: var(--accent-bg);
 }
